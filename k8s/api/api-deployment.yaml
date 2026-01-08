@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coordinates-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: coordinates-api
+  template:
+    metadata:
+      labels:
+        app: coordinates-api
+    spec:
+      containers:
+      - name: coordinates-api
+        image: danielshemesh21/coordinates_api:v1
+        ports:
+        - containerPort: 8000
+          name: http
+        envFrom:
+        - configMapRef:
+            name: db-config
+        - secretRef:
+            name: db-secret
+
